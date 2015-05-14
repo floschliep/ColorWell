@@ -5,7 +5,7 @@ ColorWell
 
 An implementation of the color well similar to iWork, inspired by [DFColorWell](https://github.com/danieljfarrell/DFColorWell).
 
-All custom drawing is done with layers, the usual NSEvent methods (mouseDown:, mouseUp:) are implemented to keep track of the control's state and turn on or off different drawing options. Colors can only be selected from a predefined set of colors, unlike [DFColorWell](https://github.com/danieljfarrell/DFColorWell). Data source methods must be implemented to fill the popover grid with color cells.
+All custom drawing is done with layers, the usual NSEvent methods (mouseDown:, mouseUp:) are implemented to keep track of the control's state and turn/off different drawing options. Colors can only be selected from a predefined set of colors, unlike [DFColorWell](https://github.com/danieljfarrell/DFColorWell). Data source methods must be implemented to fill the popover grid with color cells.
 
 Any improvements welcomed. 
 
