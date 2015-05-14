@@ -1,49 +1,47 @@
-DFColorWell
+ColorWell
 -----------
 
-![DFColorWell example.](https://github.com/danieljfarrell/DFColorWell/blob/master/screenshot.png)
+![](screenshot.png)
 
-An implementation of the colour well seen in Pages 5, Numbers 3 and Keynote 6.
+An implementation of the color well similar to iWork, inspired by DFColorWell.
 
-All custom drawing is done with NSBezierPath (cached where possible), the usual NSEvent methods (-mouseDown:, -mouseUp:, -mouseDrag) are implemented to keep track of the control's state and turn on or off different drawing options. Colours can be dragged and dropped into or out of the colour well using the systems NSColorPanel. Delegate methods should be implemented to fill the popover grid with colour cells.
+All custom drawing is done with layers, the usual NSEvent methods (mouseDown:, mouseUp:) are implemented to keep track of the control's state and turn on or off different drawing options. Colors can only be selected from a predefined set of colors, unlike [DFColorWell](https://github.com/danieljfarrell/DFColorWell). Data source methods must be implemented to fill the popover grid with color cells.
 
 Any improvements welcomed. 
-
-Things that need adding & improvements
---------------------------------------
-
-* I wrote this on rMBP running OSX 10.10 so there may be some retina specific code which does not look good on other screens.
-
-* Want to add the ability to display custom views in the popover (from a user specified content view controller), this will enable users to design their own layout of colour cells etc.
 
 Usage
 -----
 
-1. Drag out an NSView into a XIB
-2. Change the class to `DFColorWell`
-
-   ![Changing the custom class screenshot](http://i.imgur.com/YdQ6qbb.png)
-   
-3. Add placeholder intrinsic size to 67 by 23. 
-   
-   **NB** DFColorWell sets the `intrinsicContentSize` because the control will always have a fixed size, so size constraints should not be used.
-
-   ![Setting the placeholder intrinsic content size](http://i.imgur.com/5X0KuA5.png)
-
-4. Implement all the **required** delegate methods which fills the pop over with different colours:
-
+1. Drag out an NSView into an XIB or Storyboard
+2. Change the class to `ColorWell`
+3. Unlike [DFColorWell](https://github.com/danieljfarrell/DFColorWell), `ColorWell` allows custom sizes, but 67x23 (or similar sizes) looks good
+4. Set the color well’s data source and initial selected index path (the latter is not required, but recommended):
 ```
-    - (NSUInteger) numberOfRowsInColorWell:(DFColorWell*)colorWell;
-    - (NSUInteger) numberOfColumnsInColorWell:(DFColorWell*)colorWell;
-    - (NSColor*) colorWell:(DFColorWell*)colorWell colorAtColumn:(NSUInteger)column row:(NSUInteger)row;
+    @IBOutlet weak var colorWell: ColorWell! {
+        didSet {
+            self.colorWell.dataSource = self
+            self.colorWell.selectedIndexPath = IndexPath(column: 0, row: 0)
+        }
+    }
+```
+5. Implement all data source methods to fill the popover with different colors:
+```
+    func numberOfRowsInColorWell(colorwell: ColorWell) -> UInt
+    func numberOfColumnsInColorWell(colorwell: ColorWell) -> UInt
+    func colorWell(colorwell: ColorWell, colorAtIndexPath indexPath: IndexPath) -> NSColor?
 ```
 
 Contact
 -------
-* Daniel Farrell
-* [@danieljfarrell](http://twitter.com/danieljfarrell)
-* http://daniel.farrell.name
+* Florian Schliep
+* [@floschliep](https://twitter.com/floschliep)
+* http://floschliep.com
+
+Acknowledgements
+----------------
+
+Thanks to [Daniel J Farrell](https://github.com/danieljfarrell) for creating [DFColorWell](https://github.com/danieljfarrell/DFColorWell), which is the basis of this project.
 
 Licensing
 ---------
-DFColorWell is licensed under the [BSD license](http://opensource.org/licenses/BSD-3-Clause).
+ColorWell is licensed under the [BSD license](http://opensource.org/licenses/BSD-3-Clause).
